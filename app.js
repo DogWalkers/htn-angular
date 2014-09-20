@@ -1,5 +1,5 @@
 angular
-	.module('app', [])
+	.module('app', ['ngCookies'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', {
@@ -18,7 +18,7 @@ angular
     }])
     //store to cookie
     //Note: you need to change $window.location.href thing.
-    .controller('loginCtrl', ['$scope', '$http', '$window', '$cookieStore' function($scope, $http, $window, $cookieStore){
+    .controller('loginCtrl', ['$scope', '$http', '$window', '$cookieStore', function($scope, $http, $window, $cookieStore){
         $scope.isClinic = false;
         $scope.isPatient = true;
         $scope.showSignIn = false;
