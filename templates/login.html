@@ -10,7 +10,9 @@
 		<h1 ng-show="isPatient">Sign in as a patient</h1>
 		Email: <input type="text">
 		Password: <input type="password">
-		<button ng-click="signInClinic">Sign In</button>
+		<button>Sign In</button>
+		<button ng-show="isClinic" ng-click="isPatient = true; isClinic = false;">Sign In as a Patient?</button>
+		<button ng-show="isPatient" ng-click="isPatient = false; isClinic = true;">Sign In as a Clinic Representative?</button>
 	</div>
 
 	<button ng-click="showSignUp = !showSignUp; showSignIn = !showSignIn;" ng-show="showSignIn">Not registered? Sign Up!</button>
@@ -24,7 +26,8 @@
 			Clinic Address: <input type="text"><br>
 			Open time: <input type="text"><br>
 			Close time: <input type="text"><br>
-			<button ng-click="signUpClinic">Sign Up as a Doctor</button>
+			<button>Sign Up</button>
+			<button ng-click="isClinic = false; isPatient = true;">Sign Up as a Patient?</button>
 		</div>
 		<div ng-show="isPatient">
 			<h1>Sign up as a patient</h1>
@@ -37,7 +40,8 @@
 			Gender: <input type="radio" name="sex" value="male">Male  <input type="radio" name="sex" value="female">Female<br>
 			Health card: <input type="text"><br>
 			Clinic history: <input type="text"><br>
-			<button ng-click="signUpPatient">Sign Up as a Patient</button>
+			<button>Sign Up</button>
+			<button ng-click="isClinic = true; isPatient = false;">Sign Up as a Clinic Representative?</button>
 		</div>
 	</div>
 </div>
