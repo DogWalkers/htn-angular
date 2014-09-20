@@ -19,24 +19,28 @@ angular
     }])
 
     .controller('loginCtrl', ['$scope', '$http', function($scope, $http){
+        $scope.isClinic = false;
+        $scope.isPatient = true;
         $scope.showSignIn = false;
         $scope.showSignUp = false;
         $scope.showClinicOrPatient = true;
-        
-        $scope.signInPatient = function(){
-            console.log("sign in patient");
+        console.log("Into login controller");
+        $scope.signIn = function(){
+            if($scope.isClinic == true){
+                console.log("sign in as a clinic");
+            }
+            else{
+                console.log("sign in as a patient");
+            }
         }
 
-        $scope.signInClinic = function(){
-            console.log("signInClinic");
-        }
-
-        $scope.signUpPatient = function(){
-            console.log("signUpPatient");
-        }
-
-        $scope.signUpClinic = function(){
-            console.log("signUpClinic");
+        $scope.signUp = function(){
+            if($scope.isClinic == true){
+                console.log("sign up as a clinic");
+            }
+            else{
+                console.log("sign up as a patient");
+            }
         }
 
     }]);
