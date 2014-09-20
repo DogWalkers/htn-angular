@@ -7,7 +7,7 @@
         height: 500px;
       }
     </style>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
          <script type="text/javascript">
       var map = null;
       var homeMarkerLocation = new google.maps.LatLng(-33.80010128657071, 151.28747820854187);
@@ -30,17 +30,21 @@
         map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
         for (var i = 0; i < locations.length; i++) {
+          //setTimeout(function() {
             createMarker(new google.maps.LatLng(locations[i][1], locations[i][2]), locations[i][0], locations[i][3], locations[i][4]);
+          //}, i * 200);
         }
-        setTimeout(3000, createRadius(5000));
+        setTimeout(createRadius(5000), 3000);
       }
 
       function createMarker(latlng, myTitle, myNum, myIcon) {
         var contentString = myTitle;
         var marker = new google.maps.Marker({
+          animation: google.maps.Animation.DROP,
           position: latlng,
           map: map,
           zIndex: Math.round(latlng.lat() * -100000) << 5,
+          icon: '../assets/img/locationMarker.png',
           title: myTitle
         });
 
@@ -54,6 +58,8 @@
             infowindow.open(map, marker);
           });
           infowindow.open(map, marker);
+        } else {
+          marker.icon = '../assets/img/homeMarker.png';
         }
        
         markerArray.push(marker); //push local var marker into global array
