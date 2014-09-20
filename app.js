@@ -6,6 +6,10 @@ angular
                 templateUrl: './templates/login.html',
                 controller: 'loginCtrl'
                 })
+            .when('/patientLoggedIn',{
+                templateUrl: './templates/patient.html',
+                controller: 'patientCtrl'
+            })
             // .when('/login', {   //   /#/login
             //     templateUrl: './templates/login.html',
             //     controller: 'loginCtrl'
@@ -22,8 +26,9 @@ angular
     .controller('appCtrl', ['$scope', '$http', function($scope, $http){ 
     	console.log("in appCtrl");
     }])
-
-    .controller('loginCtrl', ['$scope', '$http', function($scope, $http){
+    //store to cookie
+    //Note: you need to change $window.location.href thing.
+    .controller('loginCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
         $scope.isClinic = false;
         $scope.isPatient = true;
         $scope.showSignIn = false;
@@ -42,6 +47,7 @@ angular
                     }).success(function(data, status, headers, config){
                         console.log(data);
                         console.log("success");
+                        //$window.location.href = "http://0.0.0.0:8080/#/patientLoggedIn"  //You Need to change stuff here
                 });
             }
             else{
@@ -55,6 +61,7 @@ angular
                     }).success(function(data, status, headers, config){
                         console.log(data);
                         console.log("success");
+                        $window.location.href = "http://0.0.0.0:8080/#/patientLoggedIn" //You Need to change stuff here
                 });
             }
         }
@@ -76,6 +83,7 @@ angular
                     }).success(function(data, status, headers, config){
                         console.log(data);
                         console.log("success");
+                        //$window.location.href = "http://0.0.0.0:8080/#/patientLoggedIn" //You Need to change stuff here
                 });
 
             }
@@ -95,8 +103,27 @@ angular
                     }).success(function(data, status, headers, config){
                         console.log(data);
                         console.log("success");
+                        $window.location.href = "http://0.0.0.0:8080/#/patientLoggedIn" //You Need to change stuff here
                 });
             }
+        }
+
+
+    }])
+
+    .controller('patientCtrl', ['$scope', '$http', function($scope, $http){
+        console.log("In patient controller");
+        $scope.getLatitudeLongitude = function(){
+            console.log($scope.patientAddress);
+            var patientAddressCompressed = $scope.patientAddress.replace(" ","+");
+            $http({
+                method: 'POST',
+                url: 'https://maps.googleapis.com/maps/api/geocode/json?address='+patientAddressCompressed+'&key=AIzaSyDW6_fagL8iR0nbdKa140dEKmiP4sC6D2k'
+            }).success(function(data, status, headers, config){
+                        console.log(data);
+                        console.log("success");
+                        
+            });
         }
 
     }]);
