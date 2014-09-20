@@ -13,7 +13,12 @@ angular
             .otherwise({ redirectTo: '/' });
     }])
 
-
+clinicName
+ownerEmail
+ownerPassword
+clinicAddress
+openTime
+closeTime
     .controller('appCtrl', ['$scope', '$http', function($scope, $http){ 
     	console.log("in appCtrl");
     }])
@@ -37,6 +42,20 @@ angular
         $scope.signUp = function(){
             if($scope.isClinic == true){
                 console.log("sign up as a clinic");
+                var data: {
+                        clinicName: "pikachu",
+                        ownerEmail: "pikapi@pokemon.com",
+                        ownerPassword: "Ash Ketchup",
+                        clinicAddress: "Pokeball",
+                        openTime: "12:00am",
+                        closeTime: "6:00am"
+                    };
+                $http.post('http://hackthenorth-myfirstnodeapp.rhcloud.com/api/clinic/signup', data).success(function(data, status, headers, config){
+                    console.log(data);
+                    console.log("success");
+                }).error(function(){
+                    console.log("error");
+                });
             }
             else{
                 console.log("sign up as a patient");
