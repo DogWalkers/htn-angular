@@ -1,7 +1,7 @@
 <!-- Custom styles for this template -->
     <link href="assets/css/main.css" rel="stylesheet">
 
-<div class="user-container">
+<div class="user-container" style="margin-top: 7px;">
 	<div ng-show="showClinicOrPatient">
 		<div class="row" style="display:inline; padding-top: 20ems;"><button class="user-btn" ng-click="isClinic = true; isPatient = false; showSignIn = true; showClinicOrPatient = false;">Clinic</button>
 		<button class="user-btn" ng-click="isClinic = false; isPatient = true; showSignIn = true; showClinicOrPatient = false;">Patient</button>
@@ -10,8 +10,8 @@
 
 <div class="authenticate-box">
 	<div ng-show="showSignIn && (isClinic || isPatient)">
-		<h3 ng-show="isClinic">Sign in as a clinician</h3>
-		<h3 ng-show="isPatient">Sign in as a patient</h3>
+		<h3 ng-show="isClinic">Sign in as a Clinician</h3>
+		<h3 ng-show="isPatient">Sign in as a Patient</h3>
 		<table style="margin: 0 auto; text-align:right;">
 		<tbody>
 			<tr><td>Email:   </td><td><input style="padding: 5px; width: 295px;" type="text" placeholder="yourname@example.com" ng-model="signInEmail"></td></tr>
@@ -20,44 +20,45 @@
 		</table>
 		<button class="login-btn" style="padding: 13px 163px; margin-left: -13px; margin-right: auto;" ng-click="signIn();">Sign In</button>
 		<div class="row" style="display:inline; padding-top: 10ems;">
-		<button class="login-btn" style="margin-top:-2px;" ng-show="isClinic" ng-click="isPatient = true; isClinic = false;">Sign in as a patient?</button>
-		<button class="login-btn" style="margin-top:-2px;" ng-show="isPatient" ng-click="isPatient = false; isClinic = true;">Sign in as a clinician?</button>
-		<button class="login-btn" style="margin-top:-2px;" ng-click="showSignUp = !showSignUp; showSignIn = !showSignIn;" ng-show="showSignIn">Not registered yet? Sign Up!</button>
+		<button class="login-btn" style="margin-top:-2px; padding-left: 25px; padding-right: 24px;" ng-show="isClinic" ng-click="isPatient = true; isClinic = false;">Sign in as a Patient?</button>
+		<button class="login-btn" style="margin-top:-2px; padding-left: 22px; padding-right: 19px;" ng-show="isPatient" ng-click="isPatient = false; isClinic = true;">Sign in as a Clinician?</button>
+		<button class="login-btn" style="margin-top:-2px;" ng-click="showSignUp = !showSignUp; showSignIn = !showSignIn;" ng-show="showSignIn">Not registered? Sign Up!</button>
 		</div>
 	</div>
 </div>
 
 	
 
-	<div ng-show="showSignUp && (isClinic || isPatient)">
+	<div ng-show="showSignUp && (isClinic || isPatient)" style="color: white;">
 		<div ng-show="isClinic">
-			<h3>Sign up as a clinician</h3>
+			<h3 style="color: white;">Sign up as a Clinician</h3>
 			<table style="margin: 0 auto; text-align:right;">
-		<tbody>
-			<tr><td>Clinic Name:   </td><td><input style="padding: 5px; width: 295px;" type="text" placeholder="" ng-model="clinicName"></td></tr>
-			<tr><td>Email:   </td><td><input style="padding: 5px; width: 295px;" type="text" placeholder="yourname@example.com" ng-model="clinicEmail"></td></tr>
-			<tr><td>Password:   </td><td><input style="padding: 5px; width: 295px;" type="password" placeholder="password" ng-model="clinicPassword"></td></tr>
-			<tr><td>Address:   </td><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Unit, Street, City, Province, Postal Code" ng-model="clinicAddress"></td></tr>
-			<tr><td>Open time:   </td><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Eg: 9:00 AM" ng-model="clinicOpenTime"></td></tr>
-			<tr><td>Close time:   </td><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Eg: 5:00 PM" ng-model="clinicCloseTime"></td></tr>
-		</tbody>
-		</table>
-		<button class="login-btn" style="padding: 13px 163px; margin-left: -13px; margin-right: auto;" ng-click="signUp();">Sign Up</button>
-			
+				<tbody style="margin-left: -5px;">
+					<tr><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Clinic Name" ng-model="clinicName"></td></tr>
+					<tr><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Email" ng-model="clinicEmail"></td></tr>
+					<tr><td><input style="padding: 5px; width: 295px;" type="password" placeholder="Password" ng-model="clinicPassword"></td></tr>
+					<tr><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Unit, Street, City, Province, Postal Code" ng-model="clinicAddress"></td></tr>
+					<tr><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Open Time" ng-model="clinicOpenTime"></td></tr>
+					<tr><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Close Time" ng-model="clinicCloseTime"></td></tr>
+				</tbody>
+			</table>
+			<button class="login-btn" style="padding: 13px 122px; margin-top: 2px;" ng-click="signUp();">Sign Up</button>
 		</div>
 		<div ng-show="isPatient">
-			<h1>Sign up as a patient</h1>
-			First Name: <input type="text" ng-model="patientFirstName"><br>
-			Last Name: <input type="text" ng-model="patientLastName"><br>
-			Email: <input type="text" ng-model="patientEmail"><br>
-			Password: <input type="password" ng-model="patientPassword"><br>
-			Address: <input type="text" ng-model="patientAddress"><br>
-			Age: <input type="text" ng-model="patientAge"><br>
-			Gender: <input type="radio" ng-model="patientGender" value="Male">Male  <input type="radio" ng-model="patientGender" value="Female">Female<br>
-			Health card: <input type="text" ng-model="patientHealthCard"><br>
-			Clinic history: <input type="text" ng-model="patientHistory"><br>
-			<button class="btn btn-primary" ng-click="signUp();">Sign Up</button>
-			<button class="btn btn-primary" ng-click="isClinic = true; isPatient = false;">Sign Up as a Clinic Representative?</button>
+			<h3 style="color: white;">Sign up as a Patient</h3>
+			<table style="margin: 0 auto; text-align:right;">
+				<tbody style="margin-left: -5px;">
+					<tr><td><input style="padding: 5px; width: 295px;" type="text" placeholder="First Name" ng-model="patientFirstName"></td></tr>
+					<tr><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Last Name" ng-model="patientLastName"></td></tr>
+					<tr><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Email" ng-model="patientEmail"></td></tr>
+					<tr><td><input style="padding: 5px; width: 295px;" type="password" placeholder="Password" ng-model="patientPassword"></td></tr>
+					<tr><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Unit, Street, City, Province, Postal Code" ng-model="patientAddress"></td></tr>
+					<tr><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Age" ng-model="patientAge"></td></tr>
+					<tr><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Gender" ng-model="patientGender"></td></tr>
+					<tr><td><input style="padding: 5px; width: 295px;" type="text" placeholder="Health Card" ng-model="patientHealthCard"></td></tr>
+				</tbody>
+			</table>
+			<button class="login-btn" style="padding: 13px 122px; margin-top: 2px;" ng-click="signUp();">Sign Up</button>
 		</div>
 	</div>
 </div>

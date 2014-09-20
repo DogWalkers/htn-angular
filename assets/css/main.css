@@ -95,7 +95,7 @@ a:after {
 }
 
 .navbar-inverse .navbar-nav > .active > a {
-	background: #ff7878
+	background: #ff7878;
 }
 
 .navbar-inverse .navbar-brand {
@@ -139,7 +139,7 @@ a:after {
 	text-align:center;
 	background-attachment: relative;
 	background-position: center center;
-	min-height: 600px;
+	min-height: 700px;
 	width: 100%;
 	
     -webkit-background-size: 100%;
@@ -430,7 +430,6 @@ a:after {
           user-select: none;
     color: #white;
     background-color:#ff7878;
-    border-color: #ff7878;
     style: inline-block;
 }
 
@@ -440,7 +439,6 @@ a:after {
 .user-btn:active {
   color: #black;
   background-color: #fe3f3f;
-  border-color: #ff7878;
 }
 
 
