@@ -32,10 +32,30 @@ angular
         console.log("Into login controller");
         $scope.signIn = function(){
             if($scope.isClinic == true){
-                console.log("sign in as a clinic");
+                $http({
+                    method: 'POST',
+                    url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/clinic/login',
+                    data: {
+                        ownerEmail: $scope.signInEmail,
+                        ownerPassword: $scope.signInPassword},
+                    headers: {'Content-Type': 'application/json'}
+                    }).success(function(data, status, headers, config){
+                        console.log(data);
+                        console.log("success");
+                });
             }
             else{
-                console.log("sign in as a patient");
+                $http({
+                    method: 'POST',
+                    url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/patient/login',
+                    data: {
+                        email: $scope.signInEmail,
+                        password: $scope.signInPassword},
+                    headers: {'Content-Type': 'application/json'}
+                    }).success(function(data, status, headers, config){
+                        console.log(data);
+                        console.log("success");
+                });
             }
         }
 

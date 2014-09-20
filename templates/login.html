@@ -8,8 +8,8 @@
 	<div ng-show="showSignIn && (isClinic || isPatient)">
 		<h1 ng-show="isClinic">Sign in as a clinic representative</h1>
 		<h1 ng-show="isPatient">Sign in as a patient</h1>
-		Email: <input type="text">
-		Password: <input type="password">
+		Email: <input type="text" ng-model="signInEmail">
+		Password: <input type="password" ng-model="signInPassword">
 		<button class="btn btn-primary" ng-click="signIn();">Sign In</button>
 		<button class="btn btn-primary" ng-show="isClinic" ng-click="isPatient = true; isClinic = false;">Sign In as a Patient?</button>
 		<button class="btn btn-primary" ng-show="isPatient" ng-click="isPatient = false; isClinic = true;">Sign In as a Clinic Representative?</button>
