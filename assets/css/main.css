@@ -409,4 +409,36 @@ a:after {
     background: #ff7878;
 }
 
+.user-btn{
+    display: inline-block;
+  padding: 15px 15px;
+  margin-bottom: 0;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 1.5;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+ border: 1.5px solid transparent; 
+  
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+       -o-user-select: none;
+          user-select: none;
+    color: #black;
+    background-color:#ff7878;
+    border-color: #ff7878;
+    style: inline-block;
+}
 
+
+.user-btn:hover,
+.user-btn:focus,
+.user-btn:active {
+  color: #black;
+  background-color: #fe3f3f;
+  border-color: #ff7878;
+}

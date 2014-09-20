@@ -1,7 +1,11 @@
-<div class="container">
+<!-- Custom styles for this template -->
+    <link href="assets/css/main.css" rel="stylesheet">
+
+<div class="user-container">
 	<div ng-show="showClinicOrPatient">
-		<button class="btn btn-primary" ng-click="isClinic = true; isPatient = false; showSignIn = true; showClinicOrPatient = false;">I am a clinic representative</button><br>
-		<button class="btn btn-primary" ng-click="isClinic = false; isPatient = true; showSignIn = true; showClinicOrPatient = false;">I am a patient</button>
+		<div style="display:inline; padding-top: 3ems;"><button class="user-btn" ng-click="isClinic = true; isPatient = false; showSignIn = true; showClinicOrPatient = false;">I am from a clinic</button>
+		<button class="user-btn" ng-click="isClinic = false; isPatient = true; showSignIn = true; showClinicOrPatient = false;">I am a patient</button>
+		</div>
 	</div>
 
 
