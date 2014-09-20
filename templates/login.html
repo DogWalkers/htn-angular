@@ -1,41 +1,43 @@
-<div ng-show="showClinicOrPatient">
-	<button ng-click="isClinic = true; isPatient = false; showSignIn = true; showClinicOrPatient = false;">I am a clinic representative</button><br>
-	<button ng-click="isClinic = false; isPatient = true; showSignIn = true; showClinicOrPatient = false;">I am a patient</button>
-</div>
-
-
-<div ng-show="showSignIn && (isClinic || isPatient)">
-	<h1 ng-show="isClinic">Sign in as a clinic representative</h1>
-	<h1 ng-show="isPatient">Sign in as a patient</h1>
-	Email: <input type="text">
-	Password: <input type="password">
-	<button ng-click="signInClinic">Sign In</button>
-</div>
-
-<button ng-click="showSignUp = !showSignUp; showSignIn = !showSignIn;" ng-show="showSignIn">Not registered? Sign Up!</button>
-
-<div ng-show="showSignUp && (isClinic || isPatient)">
-	<div ng-show="isClinic">
-		<h1>Sign up as a clinic representative</h1>
-		Clinic Name: <input type="text"><br>
-		Email: <input type="text"><br>
-		Password: <input type="password"><br>
-		Clinic Address: <input type="text"><br>
-		Open time: <input type="text"><br>
-		Close time: <input type="text"><br>
-		<button ng-click="signUpClinic">Sign Up as a Doctor</button>
+<div class="container">
+	<div ng-show="showClinicOrPatient">
+		<button ng-click="isClinic = true; isPatient = false; showSignIn = true; showClinicOrPatient = false;">I am a clinic representative</button><br>
+		<button ng-click="isClinic = false; isPatient = true; showSignIn = true; showClinicOrPatient = false;">I am a patient</button>
 	</div>
-	<div ng-show="isPatient">
-		<h1>Sign up as a patient</h1>
-		First Name: <input type="text"><br>
-		Last Name: <input type="text"><br>
-		Email: <input type="text"><br>
-		Password: <input type="password"><br>
-		Address: <input type="text"><br>
-		Age: <input type="text"><br>
-		Gender: <input type="radio" name="sex" value="male">Male  <input type="radio" name="sex" value="female">Female<br>
-		Health card: <input type="text"><br>
-		Clinic history: <input type="text"><br>
-		<button ng-click="signUpPatient">Sign Up as a Patient</button>
+
+
+	<div ng-show="showSignIn && (isClinic || isPatient)">
+		<h1 ng-show="isClinic">Sign in as a clinic representative</h1>
+		<h1 ng-show="isPatient">Sign in as a patient</h1>
+		Email: <input type="text">
+		Password: <input type="password">
+		<button ng-click="signInClinic">Sign In</button>
+	</div>
+
+	<button ng-click="showSignUp = !showSignUp; showSignIn = !showSignIn;" ng-show="showSignIn">Not registered? Sign Up!</button>
+
+	<div ng-show="showSignUp && (isClinic || isPatient)">
+		<div ng-show="isClinic">
+			<h1>Sign up as a clinic representative</h1>
+			Clinic Name: <input type="text"><br>
+			Email: <input type="text"><br>
+			Password: <input type="password"><br>
+			Clinic Address: <input type="text"><br>
+			Open time: <input type="text"><br>
+			Close time: <input type="text"><br>
+			<button ng-click="signUpClinic">Sign Up as a Doctor</button>
+		</div>
+		<div ng-show="isPatient">
+			<h1>Sign up as a patient</h1>
+			First Name: <input type="text"><br>
+			Last Name: <input type="text"><br>
+			Email: <input type="text"><br>
+			Password: <input type="password"><br>
+			Address: <input type="text"><br>
+			Age: <input type="text"><br>
+			Gender: <input type="radio" name="sex" value="male">Male  <input type="radio" name="sex" value="female">Female<br>
+			Health card: <input type="text"><br>
+			Clinic history: <input type="text"><br>
+			<button ng-click="signUpPatient">Sign Up as a Patient</button>
+		</div>
 	</div>
 </div>
