@@ -12,13 +12,13 @@ angular
             // })
             .otherwise({ redirectTo: '/' });
     }])
+    .config(function($httpProvider) {
+      //Enable cross domain calls
+      $httpProvider.defaults.useXDomain = true;
 
-clinicName
-ownerEmail
-ownerPassword
-clinicAddress
-openTime
-closeTime
+      //Remove the header used to identify ajax call  that would prevent CORS from working
+      delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  })
     .controller('appCtrl', ['$scope', '$http', function($scope, $http){ 
     	console.log("in appCtrl");
     }])
@@ -42,20 +42,23 @@ closeTime
         $scope.signUp = function(){
             if($scope.isClinic == true){
                 console.log("sign up as a clinic");
-                var data: {
-                        clinicName: "pikachu",
-                        ownerEmail: "pikapi@pokemon.com",
+                //$http({method: 'POST', url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/clinic/signup', data: data, })
+                
+                $http({
+                    method: 'POST',
+                    url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/clinic/signup',
+                    data: {clinicName: "pikachu",
+                        ownerEmail: "pikapi@ash.com",
                         ownerPassword: "Ash Ketchup",
                         clinicAddress: "Pokeball",
-                        openTime: "12:00am",
-                        closeTime: "6:00am"
-                    };
-                $http.post('http://hackthenorth-myfirstnodeapp.rhcloud.com/api/clinic/signup', data).success(function(data, status, headers, config){
-                    console.log(data);
-                    console.log("success");
-                }).error(function(){
-                    console.log("error");
+                        openTime: 12,
+                        closeTime: 6},
+                    headers: {'Content-Type': 'application/json'}
+                    }).success(function(data, status, headers, config){
+                        console.log(data);
+                        console.log("success");
                 });
+                    
             }
             else{
                 console.log("sign up as a patient");
