@@ -14,22 +14,11 @@ angular
                 templateUrl: './templates/clinic.html',
                 controller: 'clinicController'
             })
-            // .when('/login', {   //   /#/login
-            //     templateUrl: './templates/login.html',
-            //     controller: 'loginCtrl'
-            // })
             .otherwise({ redirectTo: '/' });
     }])
-    .config(function($httpProvider) {
-      //Enable cross domain calls
-      $httpProvider.defaults.useXDomain = true;
-
-      //Remove the header used to identify ajax call  that would prevent CORS from working
-      delete $httpProvider.defaults.headers.common['X-Requested-With'];
-  })
     //store to cookie
     //Note: you need to change $window.location.href thing.
-    .controller('loginCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
+    .controller('loginCtrl', ['$scope', '$http', '$window', '$cookieStore' function($scope, $http, $window, $cookieStore){
         $scope.isClinic = false;
         $scope.isPatient = true;
         $scope.showSignIn = false;
@@ -145,7 +134,10 @@ angular
                 //This function will be used to find the distance between the patient and each clinic and only those
                 //clinics that are in the radius of 5km are shown.
 
-
+                $http({
+                    method: 'POST',
+                    url: 'http://maps.googleapis.com/maps/api/directions/json?origin=Chicago,IL&destination=Los+Angeles,CA&waypoints=Joplin,MO|Oklahoma+City,OK&key=AIzaSyDW6_fagL8iR0nbdKa140dEKmiP4sC6D2k'
+                }).success()
             }
             $scope.calltest = function(){
                 console.log("calltest");
