@@ -42,26 +42,40 @@ angular
         $scope.signUp = function(){
             if($scope.isClinic == true){
                 console.log("sign up as a clinic");
-                //$http({method: 'POST', url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/clinic/signup', data: data, })
                 
                 $http({
                     method: 'POST',
                     url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/clinic/signup',
-                    data: {clinicName: "pikachu",
-                        ownerEmail: "pikapi@ash.com",
-                        ownerPassword: "Ash Ketchup",
-                        clinicAddress: "Pokeball",
-                        openTime: 12,
-                        closeTime: 6},
+                    data: {clinicName: $scope.clinicName,
+                        ownerEmail: $scope.clinicEmail,
+                        ownerPassword: $scope.clinicPassword,
+                        clinicAddress: $scope.clinicAddress,
+                        openTime: $scope.clinicOpenTime,
+                        closeTime: $scope.clinicCloseTime},
                     headers: {'Content-Type': 'application/json'}
                     }).success(function(data, status, headers, config){
                         console.log(data);
                         console.log("success");
                 });
-                    
+
             }
             else{
-                console.log("sign up as a patient");
+                $http({
+                    method: 'POST',
+                    url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/patient/signup',
+                    data: {firstName: $scope.patientFirstName,
+                        lastName: $scope.patientLastName,
+                        email: $scope.patientEmail,
+                        password: $scope.patientPassword,
+                        homeAddress: $scope.patientAddress,
+                        age: $scope.patientAge,
+                        sex: $scope.patientGender,
+                        healthCardNumber: $scope.patientHealthCard},
+                    headers: {'Content-Type': 'application/json'}
+                    }).success(function(data, status, headers, config){
+                        console.log(data);
+                        console.log("success");
+                });
             }
         }
 
