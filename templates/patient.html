@@ -15,7 +15,7 @@
             <tbody>
               <tr>
                 <td><input type="text" id="address" style="width: 250px; height: 47px; margin-top: 5px;" placeholder="Enter Your Current Location" ng-model="patientAddress"></td>
-                <td><button class="login-btn" ng-click="getLatitudeLongitude(); search(new google.maps.LatLng(latitude, longitude));">Go</button><td>
+                <td><button class="login-btn" ng-click="getLatitudeLongitude();">Go</button><td>
               </tr>
             </tbody>
           </table>
@@ -31,5 +31,3 @@
 		<button class="btn btn-primary" ng-click="getLatitudeLongitude();">Submit</button>
 	</div>
 </div>-->
-
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
