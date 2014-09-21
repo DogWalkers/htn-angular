@@ -6,10 +6,12 @@
 	<div class="panel panel-primary" ng-repeat="p in patientsInQueue">
 		
 	  		<div class="panel-heading"><span>{{p.patientName}}</span>
-	  		<span style="float: right;">{{p.timeEntered | date: 'mm:ss'}}</span>
+	  		<span style="float: right;">Remove</span>
 	  		</div>
 	  		<div class="panel-body">
-	    		<p>{{p.reasonForVisit}}</p>
+	    		<p>{{p.reasonForVisit}}
+	    		<span style="float: right;">{{p.minutes}}:{{p.seconds}}</span></p>
+
 	  		</div>
 		
   	</div>	
