@@ -24,7 +24,7 @@ angular
             });
         }
         else{
-            API.patientLogin($cope.signInEmail, $scope.signInPassword).success(function(data, status, headers, config){
+            API.patientLogin($scope.signInEmail, $scope.signInPassword).success(function(data, status, headers, config){
                 $cookieStore.put('token', {access_token: data.token, patient: true});
                         $location.path("/patientLoggedIn"); //You Need to change stuff here
                     }).error(function(){
