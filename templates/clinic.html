@@ -1,4 +1,16 @@
-<div style="padding-top: 50px;">
+<div class="container" style="padding-top: 50px; width: 50%; height: 500px; overflow-y: scroll;">
 	Hey, doc! Improve your hand writting!
 	{{variable}}!
+
+	<div class="panel panel-primary">
+		<div ng-repeat="p in patientsInQueue">
+	  		<div class="panel-heading"><span>{{p.patientName}}</span>
+	  		<span style="float: right;">time</span>
+	  		</div>
+	  		<div class="panel-body">
+	    		<p>{{p.reasonForVisit}}</p>
+	  		</div>
+		</div>
+  	</div>
+</div>
 </div>
