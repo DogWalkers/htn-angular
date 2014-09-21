@@ -19,8 +19,11 @@
 
     <!-- Custom styles for Angular content integration -->
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-	<script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+	<script src="./bower_components/angular-cookies/angular-cookies.js"></script>
+	<script src="http://maps.google.com/maps/api/js?v=3.esp"></script>
 	<script type="text/javascript" src="app.js"></script>
+	<script src="./config.js"></script>
+	<script src="./APIFactory.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -51,57 +54,11 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
+    
+    <div ng-app="app">
+		<div ng-view></div>
+    </div>
 
-	<div id="headerwrap">
-		<div class="container">
-			<div class="row centered">
-				<div class="col-lg-8 col-lg-offset-2">
-				<h1>The real <b>walk-in</b> experience is here!</h1>
-				<h2 style="size: 3ems; padding-bottom: 3ems;">We stay in line so you don't have to.</h2>
-				</div>
-			</div><!-- row -->
-			<div ng-app="app">
-			<div ng-view></div>
-		</div>
-		</div><!-- container -->
-	</div><!-- headerwrap -->
-
-
-	<div class="container w">
-		<div class="row centered">
-			<br><br>
-			<div class="col-lg-4">
-				<i class="fa fa-clock-o"></i>
-				<h4>SAVE TIME</h4>
-				<p>We know how important your time is. That's why we believe you shouldn't have to deal with long lines and potential cancellations. Instead, all you need to do is check which clinic near you has the least waiting time, add yourself to the queue and leave the rest to us.</p>
-			</div><!-- col-lg-4 -->
-
-			<div class="col-lg-4">
-				<i class="fa fa-envelope"></i>
-				<h4>GET NOTIFIED</h4>
-				<p>Customised SMS notifications remind you when its almost time for your check up.</p>
-			</div><!-- col-lg-4 -->
-
-			<div class="col-lg-4">
-				<i class="fa fa-file-text-o"></i>
-				<h4>TRACK SEAMLESSLY</h4>
-				<p>Analyse patient visits and wait times for different clinics, so that you can make a smarter decision.</p>
-			</div><!-- col-lg-4 -->
-		</div><!-- row -->
-		<br>
-		<br>
-	</div><!-- container -->
-	
-	<!-- FOOTER -->
-	<div id="f">
-		<div class="container">
-			<div class="row centered">
-			<h3 style="color: white;">The Team</h3>
-				<a target="_blank" href="https://github.com/sahiljain"><i class="fa fa-github"></i>Sahil Jain</a><a target="_blank" href="https://github.com/ayushbhagat"><i class="fa fa-github"></i>Ayush Bhagat</a><a target="_blank" href="https://github.com/AddySridhar95"><i class="fa fa-github"></i>Aditya Sridhar</a><a target="_blank" href="https://github.com/kaivalyagandhi"><i class="fa fa-github"></i>Kaivalya Gandhi</a>
-		
-			</div><!-- row -->
-		</div><!-- container -->
-	</div><!-- Footer -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
