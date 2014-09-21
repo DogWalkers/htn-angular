@@ -11,10 +11,10 @@ app.factory('API', function ($http) {
 			url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/clinic/signup',
 			data: {
 				clinicName: clinicName,
-				ownerEmail: clinicEmail,
-				ownerPassword: clinicPassword,
+				ownerEmail: ownerEmail,
+				ownerPassword: ownerPassword,
 				clinicAddress: clinicAddress,
-				openTime: clinicOpenTime,
+				openTime: openTime,
 				closeTime: clinicCloseTime,
 				clinicLatitude: clinicLatitude,
 				clinicLongitude: clinicLongitude

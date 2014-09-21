@@ -12,7 +12,7 @@ app.config(['$routeProvider', function($routeProvider) {
             })
             .when('/clinicLoggedIn',{
                 templateUrl: './templates/clinic.html',
-                controller: 'clinicController'
+                controller: 'clinicCtrl'
             })
             .otherwise({ redirectTo: '/' });
 }]);
