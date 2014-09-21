@@ -1,6 +1,5 @@
-angular
-.module('app', ['ngCookies'])
-.controller('loginCtrl', ['$scope', '$http', '$window', '$cookieStore', '$location', 'API', function($scope, $http, $window, $cookieStore, $location, API){
+var app = angular.module('app', ['ngCookies']);
+app.controller('loginCtrl', ['$scope', '$http', '$window', '$cookieStore', '$location', 'API', function($scope, $http, $window, $cookieStore, $location, API){
     $scope.isClinic = false;
     $scope.isPatient = true;
     $scope.showSignIn = false;
@@ -14,6 +13,7 @@ angular
             $location.path('/clinicLoggedIn');
         }
     } 
+
     $scope.signIn = function(){
         if($scope.isClinic == true){
             API.clinicLogin($scope.signInEmail, $scope.signInPassword).success(function(data, status, headers, config){
@@ -68,30 +68,24 @@ angular
                 }   
             });
 
-} else {
-    API.patientSignup($scope.patientFirstName,
-        $scope.patientLastName,
-        $scope.patientEmail,
-        $scope.patientPassword,
-        $scope.patientAddress,
-        $scope.patientAge,
-        $scope.patientGender,
-        $scope.patientHealthCard)
-    .success(function(data, status, headers, config){
-        console.log(data);
-        console.log("success");
-        $cookieStore.put('token', {access_token: data.token, patient: true});
-                        $location.path("/patientLoggedIn"); //You Need to change stuff here
-                    }).error(function(){
-                        alert("failed to sign up");
-                    });
-                }
-            }
-        }])
+        } else {
+            API.patientSignup($scope.patientFirstName,
+            $scope.patientLastName,
+            $scope.patientEmail,
+            $scope.patientPassword,
+            $scope.patientAddress,
+            $scope.patientAge,
+            $scope.patientGender,
+            $scope.patientHealthCard)
+                .success(function(data, status, headers, config){
+                    $cookieStore.put('token', {access_token: data.token, patient: true});
+                    $location.path("/patientLoggedIn");
+                });
+        }
+    }
+}]);
 
-.controller('patientCtrl', ['$scope', '$http', function($scope, $http){
-    console.log("In patient controller");
-
+app.controller('patientCtrl', ['$scope', '$http', function($scope, $http){
             $scope.distBwTwoPoints = function(lat1, lat2, lng1, lng2){ //lat1 and lng1 are source & the other 2 are destination
                 console.log("in distBwTwoPoints");
                 var map;
@@ -112,7 +106,6 @@ angular
                   avoidHighways: false,
                   avoidTolls: false
               }, callback);
-                
 
                 function callback(response, status) {
                   if (status != google.maps.DistanceMatrixStatus.OK) {
@@ -138,30 +131,24 @@ angular
           }
       }
 
-
-      $scope.getLatitudeLongitude = function(){
+    $scope.getLatitudeLongitude = function(){
         console.log($scope.patientAddress);
         var patientAddressCompressed = $scope.patientAddress.replace(" ","+");
-
-
-        $http({
-            method: 'POST',
-            url: 'https://maps.googleapis.com/maps/api/geocode/json?address='+patientAddressCompressed+'&key=AIzaSyDW6_fagL8iR0nbdKa140dEKmiP4sC6D2k'
-        }).success(function(data, status, headers, config){
-            console.log(data);
-            console.log("success");
-            if(data.results.length > 1){
-                alert("Please enter a more precise location.");
-            }  
-            else if(data.results.length == 0){
-                alert("You have entered an incorrect location.")
-            }   
-            else{
-                $scope.formatted_address = data.results[0].formatted_address;
-                $scope.latitude = data.results[0].geometry.location.lat;
-                $scope.longitude = data.results[0].geometry.location.lng;
-                console.log($scope.latitude);
-                console.log($scope.longitude);
+        var geocoder = new google.maps.Geocoder();
+        var geocoderRequest = { address: patientAddressCompressed };
+        geocoder.geocode(geocoderRequest, function(results, status){
+            console.log(results);
+            if(results.length < 1) {
+                alert("Could not find address!");
+            } else if (results.length > 1) {
+                alert("Please make your address more specific!");
+            } else {
+                var latitude = results[0].geometry.location.k;
+                var longitude = results[0].geometry.location.B;
+                console.log(latitude + "," + longitude);
+                $scope.formatted_address = results[0].formatted_address;
+                $scope.clinicLatitude = latitude;
+                $scope.clinicLongitude = longitude;
             }   
         });
     }
