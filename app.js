@@ -20,7 +20,6 @@ angular
             }
         } 
         $scope.signIn = function(){
-
             if($scope.isClinic == true){
                 $http({
                     method: 'POST',
@@ -134,19 +133,51 @@ angular
     console.log("In patient controller");
 
             $scope.distBwTwoPoints = function(lat1, lat2, lng1, lng2){ //lat1 and lng1 are source & the other 2 are destination
-                //Here I am going to make a POST call to Google API and find the distance between two points.
-                //This function will be used to find the distance between the patient and each clinic and only those
-                //clinics that are in the radius of 5km are shown.
+                console.log("in distBwTwoPoints");
+                var map;
+                var geocoder;
+                var bounds = new google.maps.LatLngBounds();
+                //var markersArray = [];
+                var origin = new google.maps.LatLng(lat1, lng1);
+                var destination = new google.maps.LatLng(lat2, lng2);
+            
+                
+                  var service = new google.maps.DistanceMatrixService();
+                  service.getDistanceMatrix(
+                    {
+                      origins: [origin],
+                      destinations: [destination],
+                      travelMode: google.maps.TravelMode.DRIVING,
+                      unitSystem: google.maps.UnitSystem.METRIC,
+                      avoidHighways: false,
+                      avoidTolls: false
+                    }, callback);
+                
 
-                $http({
-                    method: 'POST',
-                    url: 'http://maps.googleapis.com/maps/api/directions/json?origin=Chicago,IL&destination=Los+Angeles,CA&waypoints=Joplin,MO|Oklahoma+City,OK&key=AIzaSyDW6_fagL8iR0nbdKa140dEKmiP4sC6D2k'
-                }).success()
+                function callback(response, status) {
+                  if (status != google.maps.DistanceMatrixStatus.OK) {
+                    alert('Error was: ' + status);
+                  } else {
+                    var origins = response.originAddresses;
+                    var destinations = response.destinationAddresses;
+
+                    for (var i = 0; i < origins.length; i++) {
+                      //var results = response.rows[i].elements;
+                      console.log(response.rows[0].elements[0].distance.value);
+                      var distanceInMeters = response.rows[0].elements[0].distance.value;
+                      //addMarker(origins[i], false);
+                      // for (var j = 0; j < results.length; j++) {
+                      //   //addMarker(destinations[j], true);
+                      //   outputDiv.innerHTML += origins[i] + ' to ' + destinations[j]
+                      //       + ': ' + results[j].distance.text + ' in '
+                      //       + results[j].duration.text + '<br>';
+                      // }
+                    }
+                  }
+                  return distanceInMeters;
+                }
             }
-            $scope.calltest = function(){
-                console.log("calltest");
-                $scope.distBwTwoPoints(41.8507300,-87.6512600,41.8525800,-87.6514100);
-            }
+
 
             $scope.getLatitudeLongitude = function(){
                 console.log($scope.patientAddress);
