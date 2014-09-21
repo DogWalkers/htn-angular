@@ -1,5 +1,8 @@
 <!-- Custom styles for this template -->
-    <link href="assets/css/main.css" rel="stylesheet">
+<link href="assets/css/main.css" rel="stylesheet">
+
+
+
 
 <div class="user-container" style="margin-top: 7px;">
 	<div ng-show="showClinicOrPatient">
@@ -8,26 +11,24 @@
 		</div>
 	</div>
 
-<div class="authenticate-box">
-	<div ng-show="showSignIn && (isClinic || isPatient)">
-		<h3 ng-show="isClinic">Sign in as a Clinician</h3>
-		<h3 ng-show="isPatient">Sign in as a Patient</h3>
-		<table style="margin: 0 auto; text-align:right;">
-		<tbody>
-			<tr><td>Email:   </td><td><input style="padding: 5px; width: 295px;" type="text" placeholder="yourname@example.com" ng-model="signInEmail"></td></tr>
-			<tr><td>Password:   </td><td><input style="padding: 5px; width: 295px;" type="password" placeholder="password" ng-model="signInPassword"></td></tr>
-		</tbody>
-		</table>
-		<button class="login-btn" style="padding: 13px 163px; margin-left: -13px; margin-right: auto;" ng-click="signIn();">Sign In</button>
-		<div class="row" style="display:inline; padding-top: 10ems;">
-		<button class="login-btn" style="margin-top:-2px; padding-left: 25px; padding-right: 24px;" ng-show="isClinic" ng-click="isPatient = true; isClinic = false;">Sign in as a Patient?</button>
-		<button class="login-btn" style="margin-top:-2px; padding-left: 22px; padding-right: 19px;" ng-show="isPatient" ng-click="isPatient = false; isClinic = true;">Sign in as a Clinician?</button>
-		<button class="login-btn" style="margin-top:-2px;" ng-click="showSignUp = !showSignUp; showSignIn = !showSignIn;" ng-show="showSignIn">Not registered? Sign Up!</button>
+	<div class="authenticate-box">
+		<div ng-show="showSignIn && (isClinic || isPatient)">
+			<h3 ng-show="isClinic">Sign in as a Clinician</h3>
+			<h3 ng-show="isPatient">Sign in as a Patient</h3>
+			<table style="margin: 0 auto; text-align:right;">
+			<tbody>
+				<tr><td>Email:   </td><td><input style="padding: 5px; width: 295px;" type="text" placeholder="yourname@example.com" ng-model="signInEmail"></td></tr>
+				<tr><td>Password:   </td><td><input style="padding: 5px; width: 295px;" type="password" placeholder="password" ng-model="signInPassword"></td></tr>
+			</tbody>
+			</table>
+			<button class="login-btn" style="padding: 13px 163px; margin-left: -13px; margin-right: auto;" ng-click="signIn();">Sign In</button>
+			<div class="row" style="display:inline; padding-top: 10ems;">
+			<button class="login-btn" style="margin-top:-2px; padding-left: 25px; padding-right: 24px;" ng-show="isClinic" ng-click="isPatient = true; isClinic = false;">Sign in as a Patient?</button>
+			<button class="login-btn" style="margin-top:-2px; padding-left: 22px; padding-right: 19px;" ng-show="isPatient" ng-click="isPatient = false; isClinic = true;">Sign in as a Clinician?</button>
+			<button class="login-btn" style="margin-top:-2px;" ng-click="showSignUp = !showSignUp; showSignIn = !showSignIn;" ng-show="showSignIn">Not registered? Sign Up!</button>
+			</div>
 		</div>
 	</div>
-</div>
-
-	
 
 	<div ng-show="showSignUp && (isClinic || isPatient)" style="color: white;">
 		<div ng-show="isClinic">
@@ -62,3 +63,37 @@
 		</div>
 	</div>
 </div>
+
+<div class="container w">
+		<div class="row centered">
+			<br><br>
+			<div class="col-lg-4">
+				<i class="fa fa-clock-o"></i>
+				<h4>SAVE TIME</h4>
+				<p>We know how important your time is. That's why we believe you shouldn't have to deal with long lines and potential cancellations. Instead, all you need to do is check which clinic near you has the least waiting time, add yourself to the queue and leave the rest to us.</p>
+			</div><!-- col-lg-4 -->
+
+			<div class="col-lg-4">
+				<i class="fa fa-envelope"></i>
+				<h4>GET NOTIFIED</h4>
+				<p>Customised SMS notifications remind you when its almost time for your check up.</p>
+			</div><!-- col-lg-4 -->
+
+			<div class="col-lg-4">
+				<i class="fa fa-file-text-o"></i>
+				<h4>TRACK SEAMLESSLY</h4>
+				<p>Analyse patient visits and wait times for different clinics, so that you can make a smarter decision.</p>
+			</div><!-- col-lg-4 -->
+		</div><!-- row -->
+		<br>
+		<br>
+	</div>
+	
+	<!-- FOOTER -->
+	<div id="f">
+			<div class="row centered">
+			<h3 style="color: white;">The Team</h3>
+				<a target="_blank" href="https://github.com/sahiljain"><i class="fa fa-github"></i>Sahil Jain</a><a target="_blank" href="https://github.com/ayushbhagat"><i class="fa fa-github"></i>Ayush Bhagat</a><a target="_blank" href="https://github.com/AddySridhar95"><i class="fa fa-github"></i>Aditya Sridhar</a><a target="_blank" href="https://github.com/kaivalyagandhi"><i class="fa fa-github"></i>Kaivalya Gandhi</a>
+		
+			</div><!-- row -->
+	</div><!-- Footer -->
