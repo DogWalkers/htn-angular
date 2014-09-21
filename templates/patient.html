@@ -19,7 +19,7 @@
               </tr>
             </tbody>
           </table>
-          	<input style="height: 47px; width: 300px; margin-bottom: 5px;" placeholder="Enter Your Symptoms">
+          	<input style="height: 47px; width: 300px; margin-bottom: 5px;" placeholder="Enter Your Symptoms" ng-model="symptoms">
 
           	</input>
 	  		<div style="height: 90vh; width: 300px; margin-left: 2px; margin-bottom: 5px; overflow-y: auto;">
@@ -31,7 +31,7 @@
 	  						Patients in Queue: {{element.numPatientsWaiting}}
 	  					<td>
 	  					<td>
-	  						<button class="login-btn" ng-click="apply();">Enter in Queue</button>
+	  						<button class="login-btn" ng-click="apply(element.clinicId);">Enter in Queue</button>
 	  					</td>
 	  				<tr>
 	  			</table>

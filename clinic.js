@@ -11,7 +11,7 @@ angular.module('app')
 			$scope.clinicName = data.clinicName;
 			$scope.clinicAddress = data.clinicAddress;
 			$scope.patientsInQueue = data.patientsInQueue;
-			$scope.patientsInQueue = [{patientName: "1vjhkrugh", reasonForVisit: "gjkehgje", timeEntered: "2014-09-20T23:10:29.380Z"},{patientName: "fehwgjerhg", reasonForVisit: "dsgbhjrgej", timeEntered: "2014-09-20T23:10:29.380Z"}]
+			//$scope.patientsInQueue = [{patientName: "1vjhkrugh", reasonForVisit: "gjkehgje", timeEntered: "2014-09-20T23:10:29.380Z"},{patientName: "fehwgjerhg", reasonForVisit: "dsgbhjrgej", timeEntered: "2014-09-20T23:10:29.380Z"}]
 			
 			for(var i = 0; i < $scope.patientsInQueue.length; i++){
 				var date = new Date($scope.patientsInQueue[i].timeEntered);
