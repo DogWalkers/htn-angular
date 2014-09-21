@@ -4,11 +4,17 @@ app.controller('patientCtrl', ['$scope', '$http', '$cookieStore', '$location', f
     if ($cookieStore.get("token") == null) {
       $location.path("/");
     }
+    var access_token = $cookieStore.get('token').access_token;
+    $scope.apply = function(clinicId){
+        $http({
+            method: "PUT",
+            url: "http://hackthenorth-myfirstnodeapp.rhcloud.com/api/patient/queue/"+clinicId+"?token="+String(access_token),
+            data: {reasonForVisit: symptoms},
+            headers: {'Content-Type': 'application/json'}
+        }).success(function(data){
+            $location.path('/patientLoggedIn');
+        });
 
-    $scope.showModal = false;
-    $scope.apply = function() {
-      $scope.showModal = true;
-      google.maps.event.trigger(map, 'resize');
     }
 
     // scope variables and functions
