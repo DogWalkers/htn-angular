@@ -19,6 +19,14 @@
               </tr>
             </tbody>
           </table>
+	  		<div style="height: 90vh; width: 300px; background-color: white;" ng-show="clickedGo">
+	  			<div ng-repeat="element in clinics | orderBy:clinicName:reverse" style="border-bottom: 2px black;">
+	  				{{element.clinicName}}<br>
+	  				Distance: {{element.distBwTwoPoints(element.clinicLatitude, home.latitude, element.clinicLongitude, home.longitude)}}<br>
+	  				Patients in Queue: {{element.numPatientsWaiting}}<br>
+	  				<button class="login-btn">Enter in Queue</button>
+	  			</div>
+	  		</div>
         </div>
       </td>
     </tr>

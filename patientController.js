@@ -43,6 +43,7 @@ app.controller('patientCtrl', ['$scope', '$http', '$cookieStore', '$location', f
     }
 
     $scope.patientAddress;
+    $scope.clickedGo = false;
     
     $scope.getLatitudeLongitude = function() {
       var geocoder = new google.maps.Geocoder();
@@ -58,8 +59,9 @@ app.controller('patientCtrl', ['$scope', '$http', '$cookieStore', '$location', f
             var longitude = results[0].geometry.location.B;
             console.log(latitude + "," + longitude);
           }
+          $scope.clickedGo = true;
           search(latitude, longitude);
-        }
+        });
     }
 
     function initialize(locations) {
@@ -79,7 +81,7 @@ app.controller('patientCtrl', ['$scope', '$http', '$cookieStore', '$location', f
                 return;
             } else {
                 setTimeout(function() {
-                    createMarker(new google.maps.LatLng(locations[j][1], locations[j][2]), locations[j][0], j);
+                    createMarker(new google.maps.LatLng(locations[j][1], locations[j][2]), locations[j][0], j, false, true);
                     j--;
                     dropAndCreateMarker(j);
                 }, 400);
@@ -89,7 +91,7 @@ app.controller('patientCtrl', ['$scope', '$http', '$cookieStore', '$location', f
     }
 
     var markerArray = []; //create a global array to store markers
-    function createMarker(latlng, myTitle, j, home) {
+    function createMarker(latlng, myTitle, j, home, infoWindowCheck) {
         var tempFilePath = null;
         if (!home) {
             tempFilePath = '../assets/img/locationMarker.png';
@@ -107,19 +109,22 @@ app.controller('patientCtrl', ['$scope', '$http', '$cookieStore', '$location', f
 
         if (!home) {
             // create infowindow with a size and content, then add a listener to it and then open it
-            var infowindow = new google.maps.InfoWindow({
-                size: new google.maps.Size(150, 50),
-                content: myTitle
-            });
-            google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map, marker);
-            });
-            setTimeout(function() { infowindow.open(map, marker); }, (j + 3) * 400);
+            if (infoWindowCheck) {
+              var infowindow = new google.maps.InfoWindow({
+                  size: new google.maps.Size(150, 50),
+                  content: myTitle
+              });
+              google.maps.event.addListener(marker, 'click', function() {
+                  infowindow.open(map, marker);
+              });
+              setTimeout(function() { infowindow.open(map, marker); }, (j + 3) * 400);
+            }
         }
 
         markerArray.push(marker); //push local var marker into global array
     }
     
+    $scope.home = {};
     function search (searchCenterLat, searchCenterLong) {
         var myCircle = new google.maps.Circle({
             center: new google.maps.LatLng(searchCenterLat, searchCenterLong),
@@ -131,12 +136,30 @@ app.controller('patientCtrl', ['$scope', '$http', '$cookieStore', '$location', f
         var myBounds = myCircle.getBounds();
 
         //filters markers
+        var curChar = "A";
         for(var i=markerArray.length;i--;) {
-            if(!myBounds.contains(markerArray[i].getPosition()))
-                markerArray[i].setMap(null);
+          if(!myBounds.contains(markerArray[i].getPosition())) {
+              curChar = nextChar(curChar);
+              markerArray[i].setMap(null);
+              //$scope.clinics[i].clinicName = curChar + ") " + $scope.clinics[i].clinicName;
+              var infowindow = new google.maps.InfoWindow({
+                size: new google.maps.Size(150, 50),
+                content: curChar + ") " + markerArray[i].title
+              });
+              infowindow.open(map, markerArray[i]);
+              createMarker(markerArray[i].position, markerArray[i].title, -3, false, false);
+          }
         }
-        map.setCenter(searchCenter);
-        map.setZoom(map.getZoom()+1);
+        createMarker(new google.maps.LatLng(searchCenterLat, searchCenterLong), "Home", 0, true, true);
+        $scope.home.latitude = searchCenterLat;
+        $scope.home.longitude = searchCenterLong;
+
+        map.setCenter(new google.maps.LatLng(searchCenterLat, searchCenterLong));
+        map.setZoom(map.getZoom()+5);
+    }
+
+    function nextChar(c) {
+      return String.fromCharCode(c.charCodeAt(0) + 1);
     }
 
     // google map API services
