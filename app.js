@@ -24,9 +24,9 @@ angular
             });
         }
         else{
-            API.patientLogin($cope.signInEmail, $scope.signInPassword).success(function(data, status, headers, config){
+            API.patientLogin($scope.signInEmail, $scope.signInPassword).success(function(data){
                 $cookieStore.put('token', {access_token: data.token, patient: true});
-                        $location.path("/patientLoggedIn"); //You Need to change stuff here
+                        $location.path("/patientLoggedIn");
                     }).error(function(){
                         alert("failed to log in");
                     });
@@ -35,8 +35,6 @@ angular
 
             $scope.signUp = function(){
                 if($scope.isClinic == true){
-                    console.log("sign up as a clinic");
-
                     var geocoder = new google.maps.Geocoder();
                     var geocoderRequest = { address: $scope.clinicAddress };
                     geocoder.geocode(geocoderRequest, function(results, status){
@@ -52,23 +50,17 @@ angular
                             $scope.formatted_address = results[0].formatted_address;
                             $scope.clinicLatitude = latitude;
                             $scope.clinicLongitude = longitude;
-                            $http({
-                                method: 'POST',
-                                url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/clinic/signup',
-                                data: {
-                                    clinicName: $scope.clinicName,
-                                    ownerEmail: $scope.clinicEmail,
-                                    ownerPassword: $scope.clinicPassword,
-                                    clinicAddress: $scope.clinicAddress,
-                                    openTime: $scope.clinicOpenTime,
-                                    closeTime: $scope.clinicCloseTime,
-                                    clinicLatitude: $scope.clinicLatitude,
-                                    clinicLongitude: $scope.clinicLongitude
-                                },
-                                headers: {'Content-Type': 'application/json'}
-                            }).success(function(data, status, headers, config){
-                                console.log(data);
-                                console.log("success");
+                            API.clinicSignup(
+                                $scope.clinicName,
+                                $scope.clinicEmail,
+                                $scope.clinicPassword,
+                                $scope.clinicAddress,
+                                $scope.clinicOpenTime,
+                                $scope.clinicCloseTime,
+                                $scope.clinicLatitude,
+                                $scope.clinicLongitude
+                                )
+                            .success(function(data){
                                 $cookieStore.put('token', {access_token: data.token, patient: false});
                                 location.path('/clinicLoggedIn');
                             });
