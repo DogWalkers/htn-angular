@@ -5,7 +5,7 @@ app.factory('API', function ($http) {
 
 	var dataFactory = {};
 
-	dataFactory.clinicSignup = function(clinicName, ownerEmail, ownerPassword, clinicAddress, openTime, clinicLatitude, clinicLongitude) {
+	dataFactory.clinicSignup = function(clinicName, ownerEmail, ownerPassword, clinicAddress, openTime, closeTime, clinicLatitude, clinicLongitude) {
 		return $http({
 			method: 'POST',
 			url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/clinic/signup',
@@ -15,7 +15,7 @@ app.factory('API', function ($http) {
 				ownerPassword: ownerPassword,
 				clinicAddress: clinicAddress,
 				openTime: openTime,
-				closeTime: clinicCloseTime,
+				closeTime: closeTime,
 				clinicLatitude: clinicLatitude,
 				clinicLongitude: clinicLongitude
 			},

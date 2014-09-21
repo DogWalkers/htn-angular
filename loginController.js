@@ -64,7 +64,7 @@ app.controller('loginCtrl', ['$scope', '$http', '$window', '$cookieStore', '$loc
                         )
                     .success(function(data){
                         $cookieStore.put('token', {access_token: data.token, patient: false});
-                        location.path('/clinicLoggedIn');
+                        $location.path('/clinicLoggedIn');
                     });
                 }   
             });
