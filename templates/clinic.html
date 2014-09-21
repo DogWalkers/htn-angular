@@ -6,7 +6,7 @@
 	<div class="panel panel-primary" ng-repeat="p in patientsInQueue">
 		
 	  		<div class="panel-heading"><span>{{p.patientName}}</span>
-	  		<span style="float: right;">Remove</span>
+	  		<span style="float: right;"><a href="#" ng-click="patientRemove($index);">Remove</a></span>
 	  		</div>
 	  		<div class="panel-body">
 	    		<p>{{p.reasonForVisit}}
