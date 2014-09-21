@@ -1,21 +1,13 @@
 <div class="container" style="padding-top: 50px; width: 50%;">
-<h2 style="text-align: center;">{{clinicName}}</h2>
-<p style="text-align: center;">{{clinicAddress}}</p>
-
+	<h2 style="text-align: center;">{{clinicName}}</h2>
+	<p style="text-align: center;">{{clinicAddress}}</p>
 
 	<div class="panel panel-primary" ng-repeat="p in patientsInQueue">
-		
-	  		<div class="panel-heading"><span>{{p.patientName}}</span>
-	  		<span style="float: right;"><a href="#" ng-click="patientRemove($index);">Remove</a></span>
-	  		</div>
-	  		<div class="panel-body">
-	    		<p>{{p.reasonForVisit}}
-	    		<span style="float: right;">{{p.hours}}:{{p.minutes}}:{{p.seconds}}</span></p>
-
-	  		</div>
-		
-  	</div>	
-
-
-</div>
+			
+		<div class="panel-heading"><span>{{p.patientName}}</span><span style="float: right;"><a href="#" ng-click="patientRemove($index);">Remove</a></span></div>
+		<div class="panel-body">
+		    <p>{{p.reasonForVisit}}
+		    <span style="float: right;">{{p.hours}}:{{p.minutes}}:{{p.seconds}}</span></p>
+		</div>
+	</div>
 </div>
