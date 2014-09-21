@@ -35,6 +35,23 @@ app.factory('API', function ($http) {
 		});
 	};
 
+	dataFactory.patientSignup = function(firstName, lastName, email, password, homeAddress, age, sex, healthCardNumber) {
+		return $http({
+                    method: 'POST',
+                    url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/patient/signup',
+                    data: {firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        password: password,
+                        homeAddress: homeAddress,
+                        age: age,
+                        sex: sex,
+                        healthCardNumber: healthCardNumber
+                    },
+                        headers: {'Content-Type': 'application/json'}
+                    });
+	}
+
 	dataFactory.patientLogin = function(email, password){
 		return $http({
 			method: 'POST',

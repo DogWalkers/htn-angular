@@ -26,64 +26,60 @@ angular
         else{
             API.patientLogin($scope.signInEmail, $scope.signInPassword).success(function(data){
                 $cookieStore.put('token', {access_token: data.token, patient: true});
-                        $location.path("/patientLoggedIn");
-                    }).error(function(){
-                        alert("failed to log in");
-                    });
-                }
-            }
+                $location.path("/patientLoggedIn");
+            }).error(function(){
+                alert("failed to log in");
+            });
+        }
+    }
 
-            $scope.signUp = function(){
-                if($scope.isClinic == true){
-                    var geocoder = new google.maps.Geocoder();
-                    var geocoderRequest = { address: $scope.clinicAddress };
-                    geocoder.geocode(geocoderRequest, function(results, status){
-                        console.log(results);
-                        if(results.length < 1) {
-                            alert("Could not find address!");
-                        } else if (results.length > 1) {
-                            alert("Please make your address more specific!");
-                        } else {
-                            var latitude = results[0].geometry.location.k;
-                            var longitude = results[0].geometry.location.B;
-                            console.log(latitude + "," + longitude);
-                            $scope.formatted_address = results[0].formatted_address;
-                            $scope.clinicLatitude = latitude;
-                            $scope.clinicLongitude = longitude;
-                            API.clinicSignup(
-                                $scope.clinicName,
-                                $scope.clinicEmail,
-                                $scope.clinicPassword,
-                                $scope.clinicAddress,
-                                $scope.clinicOpenTime,
-                                $scope.clinicCloseTime,
-                                $scope.clinicLatitude,
-                                $scope.clinicLongitude
-                                )
-                            .success(function(data){
-                                $cookieStore.put('token', {access_token: data.token, patient: false});
-                                location.path('/clinicLoggedIn');
-                            });
-                        }   
+    $scope.signUp = function(){
+        if($scope.isClinic == true){
+            var geocoder = new google.maps.Geocoder();
+            var geocoderRequest = { address: $scope.clinicAddress };
+            geocoder.geocode(geocoderRequest, function(results, status){
+                console.log(results);
+                if(results.length < 1) {
+                    alert("Could not find address!");
+                } else if (results.length > 1) {
+                    alert("Please make your address more specific!");
+                } else {
+                    var latitude = results[0].geometry.location.k;
+                    var longitude = results[0].geometry.location.B;
+                    console.log(latitude + "," + longitude);
+                    $scope.formatted_address = results[0].formatted_address;
+                    $scope.clinicLatitude = latitude;
+                    $scope.clinicLongitude = longitude;
+                    API.clinicSignup(
+                        $scope.clinicName,
+                        $scope.clinicEmail,
+                        $scope.clinicPassword,
+                        $scope.clinicAddress,
+                        $scope.clinicOpenTime,
+                        $scope.clinicCloseTime,
+                        $scope.clinicLatitude,
+                        $scope.clinicLongitude
+                        )
+                    .success(function(data){
+                        $cookieStore.put('token', {access_token: data.token, patient: false});
+                        location.path('/clinicLoggedIn');
                     });
+                }   
+            });
 
-                } else{
-                $http({
-                    method: 'POST',
-                    url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/patient/signup',
-                    data: {firstName: $scope.patientFirstName,
-                        lastName: $scope.patientLastName,
-                        email: $scope.patientEmail,
-                        password: $scope.patientPassword,
-                        homeAddress: $scope.patientAddress,
-                        age: $scope.patientAge,
-                        sex: $scope.patientGender,
-                        healthCardNumber: $scope.patientHealthCard},
-                        headers: {'Content-Type': 'application/json'}
-                    }).success(function(data, status, headers, config){
-                        console.log(data);
-                        console.log("success");
-                        $cookieStore.put('token', {access_token: data.token, patient: true});
+} else {
+    API.patientSignup($scope.patientFirstName,
+        $scope.patientLastName,
+        $scope.patientEmail,
+        $scope.patientPassword,
+        $scope.patientAddress,
+        $scope.patientAge,
+        $scope.patientGender,
+        $scope.patientHealthCard)
+    .success(function(data, status, headers, config){
+        console.log(data);
+        console.log("success");
+        $cookieStore.put('token', {access_token: data.token, patient: true});
                         $location.path("/patientLoggedIn"); //You Need to change stuff here
                     }).error(function(){
                         alert("failed to sign up");
