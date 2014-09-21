@@ -105,9 +105,9 @@ app.controller('patientCtrl', ['$scope', '$http', '$cookieStore', '$location', f
     function createMarker(latlng, myTitle, j, home, infoWindowCheck) {
         var tempFilePath = null;
         if (!home) {
-            tempFilePath = '../assets/img/locationMarker.png';
+            tempFilePath = '../htn-angular/assets/img/locationMarker.png';
         } else {
-            tempFilePath = '../assets/img/homeMarker.png';
+            tempFilePath = '../htn-angular/assets/img/homeMarker.png';
         }
         var marker = new google.maps.Marker({
             animation: google.maps.Animation.DROP,
