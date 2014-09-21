@@ -19,23 +19,25 @@
               </tr>
             </tbody>
           </table>
-	  		<div style="height: 90vh; width: 300px; background-color: white;" ng-show="clickedGo">
-	  			<div ng-repeat="element in clinics | orderBy:clinicName:reverse" style="border-bottom: 2px black;">
-	  				{{element.clinicName}}<br>
-	  				Distance: {{element.distBwTwoPoints(element.clinicLatitude, home.latitude, element.clinicLongitude, home.longitude)}}<br>
-	  				Patients in Queue: {{element.numPatientsWaiting}}<br>
-	  				<button class="login-btn">Enter in Queue</button>
-	  			</div>
+          	<input style="height: 47px; width: 300px; margin-bottom: 5px;" placeholder="Enter Your Symptoms">
+
+          	</input>
+	  		<div style="height: 90vh; width: 300px; margin-left: 2px; margin-bottom: 5px; overflow-y: auto;">
+	  			<table ng-repeat="element in clinics | orderBy:clinicName:reverse" style="background-color: white; margin-bottom: 5px; padding: 5px; width: 297px;">
+	  				<tr>
+	  					<td style="padding-left: 5px;">
+	  						{{element.clinicName}}<br>
+	  						<!--Distance: {{element.distBwTwoPoints(element.clinicLatitude, home.latitude, element.clinicLongitude, home.longitude)}}<br>-->
+	  						Patients in Queue: {{element.numPatientsWaiting}}
+	  					<td>
+	  					<td>
+	  						<button class="login-btn" ng-click="apply();">Enter in Queue</button>
+	  					</td>
+	  				<tr>
+	  			</table>
 	  		</div>
         </div>
       </td>
     </tr>
   </tbody>
 </table>
-
-<!--<div class="container">
-	<div style="padding-top: 50px;">
-		Enter your address: <input type="text" ng-model="patientAddress">
-		<button class="btn btn-primary" ng-click="getLatitudeLongitude();">Submit</button>
-	</div>
-</div>-->

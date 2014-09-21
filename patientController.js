@@ -5,13 +5,18 @@ app.controller('patientCtrl', ['$scope', '$http', '$cookieStore', '$location', f
       $location.path("/");
     }
 
+    $scope.showModal = false;
+    $scope.apply = function() {
+      $scope.showModal = true;
+      google.maps.event.trigger(map, 'resize');
+    }
+
     // scope variables and functions
     $scope.distBwTwoPoints = function(lat1, lat2, lng1, lng2) { //lat1 and lng1 are source & the other 2 are destination
         console.log("in distBwTwoPoints");
         var map;
         var geocoder;
         var bounds = new google.maps.LatLngBounds();
-        //var markersArray = [];
         var origin = new google.maps.LatLng(lat1, lng1);
         var destination = new google.maps.LatLng(lat2, lng2);
 
@@ -139,12 +144,11 @@ app.controller('patientCtrl', ['$scope', '$http', '$cookieStore', '$location', f
         var curChar = "A";
         for(var i=markerArray.length;i--;) {
           if(!myBounds.contains(markerArray[i].getPosition())) {
-              curChar = nextChar(curChar);
               markerArray[i].setMap(null);
-              //$scope.clinics[i].clinicName = curChar + ") " + $scope.clinics[i].clinicName;
+              curChar = nextChar(curChar);
               var infowindow = new google.maps.InfoWindow({
                 size: new google.maps.Size(150, 50),
-                content: curChar + ") " + markerArray[i].title
+                content: markerArray[i].title
               });
               infowindow.open(map, markerArray[i]);
               createMarker(markerArray[i].position, markerArray[i].title, -3, false, false);
