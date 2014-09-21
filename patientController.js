@@ -7,9 +7,9 @@ app.controller('patientCtrl', ['$scope', '$http', '$cookieStore', '$location', f
     var access_token = $cookieStore.get('token').access_token;
     $scope.apply = function(clinicId){
         $http({
-            method: "PUT",
+            method: "POST",
             url: "http://hackthenorth-myfirstnodeapp.rhcloud.com/api/patient/queue/"+clinicId+"?token="+String(access_token),
-            data: {reasonForVisit: symptoms},
+            data: {reasonForVisit: $scope.symptoms},
             headers: {'Content-Type': 'application/json'}
         }).success(function(data){
             $location.path('/patientLoggedIn');
