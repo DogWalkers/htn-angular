@@ -146,30 +146,12 @@ app.controller('patientCtrl', ['$scope', '$http', '$cookieStore', '$location', f
         });
         var myBounds = myCircle.getBounds();
 
-        //filters markers
-        var curChar = "A";
-        for(var i=markerArray.length;i--;) {
-          if(!myBounds.contains(markerArray[i].getPosition())) {
-              markerArray[i].setMap(null);
-              curChar = nextChar(curChar);
-              var infowindow = new google.maps.InfoWindow({
-                size: new google.maps.Size(150, 50),
-                content: markerArray[i].title
-              });
-              infowindow.open(map, markerArray[i]);
-              createMarker(markerArray[i].position, markerArray[i].title, -3, false, false);
-          }
-        }
         createMarker(new google.maps.LatLng(searchCenterLat, searchCenterLong), "Home", 0, true, true);
         $scope.home.latitude = searchCenterLat;
         $scope.home.longitude = searchCenterLong;
 
         map.setCenter(new google.maps.LatLng(searchCenterLat, searchCenterLong));
         map.setZoom(map.getZoom()+5);
-    }
-
-    function nextChar(c) {
-      return String.fromCharCode(c.charCodeAt(0) + 1);
     }
 
     // google map API services
