@@ -1,14 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../assets/ico/favicon.png">
+
+    <title>Patient</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../assets/css/main.css" rel="stylesheet">
+
+    <script src="../assets/js/Chart.js"></script>
+
     <style type="text/css">
-      #map_canvas{
-        width: 500px;
-        height: 500px;
+      #map_canvas {
+        width: 100%;
+        height: 100vh;      
       }
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-         <script type="text/javascript">
+    <script type="text/javascript">
       var map = null;
       var homeMarkerLocation = new google.maps.LatLng(-33.80010128657071, 151.28747820854187);
       var markerArray = []; //create a global array to store markers
@@ -35,24 +53,16 @@
             return;
           } else {
             setTimeout(function() {
-              createMarker(new google.maps.LatLng(locations[j][1], locations[j][2]), locations[j][0], locations[j][3], locations[j][4]);
+              createMarker(new google.maps.LatLng(locations[j][1], locations[j][2]), locations[j][0], locations[j][3], locations[j][4], j);
               j--;
               dropAndCreateMarker(j);
-              //infowindow.open(map, marker);
             }, 400);
           }
         }
         dropAndCreateMarker(j);
-
-        /*for (var i = 0; i < locations.length; i++) {
-          setTimeout(function() {
-            createMarker(new google.maps.LatLng(locations[i][1], locations[i][2]), locations[i][0], locations[i][3], locations[i][4]);
-          }, i * 200);
-        }*/
-        //setTimeout(createRadius(5000), 3000);
       }
 
-      function createMarker(latlng, myTitle, myNum, myIcon) {
+      function createMarker(latlng, myTitle, myNum, myIcon, j) {
         var contentString = myTitle;
         var marker = new google.maps.Marker({
           animation: google.maps.Animation.DROP,
@@ -72,7 +82,7 @@
           google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map, marker);
           });
-          //infowindow.open(map, marker);
+          setTimeout(function() { infowindow.open(map, marker); }, (j + 3) * 400);
         } else {
           marker.icon = '../assets/img/homeMarker.png';
         }
@@ -80,11 +90,13 @@
         markerArray.push(marker); //push local var marker into global array
       }
 
-      function createRadius(dist) {
+      window.onload = initialize;
+
+      function search(searchCenter) {
         var myCircle = new google.maps.Circle({
-          center: markerArray[markerArray.length - 1].getPosition(),
+          center: searchCenter,
           map: map,
-          radius: dist,
+          radius: 5000,
           strokeOpacity: 0,
           fillOpacity: 0
         });
@@ -95,19 +107,11 @@
           if(!myBounds.contains(markerArray[i].getPosition()))
             markerArray[i].setMap(null);
         }
-        map.setCenter(markerArray[markerArray.length - 1].getPosition());
+        map.setCenter(searchCenter);
         map.setZoom(map.getZoom()+1);
       }
-
-      window.onload = initialize;
-      function createCir() {
-        createRadius(5000);
-      }
-      function changeAddress() {
-        map.setCenter(new google.maps.LatLng(-34.028249, 151.157507)); // SHOULD BE THE LOCATION ENTERED
-      }
     </script>
-   </head>
+  </head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -117,23 +121,37 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">SP<i class="fa fa-circle"></i>T</a>
+          <a class="navbar-brand" href="#"><i class="fa fa-share"></i> SKIP THE WAIT <i class="fa fa-clock-o"></i></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="index.html">HOME</a></li>
-            <li class="active"><a href="about.html">ABOUT</a></li>
-            <li><a href="services.html">SERVICES</a></li>
-            <li><a href="works.html">WORKS</a></li>
-            <li><a data-toggle="modal" data-target="#myModal" href="#myModal"><i class="fa fa-envelope-o"></i></a></li>
+            <li class="active"><a href="index.html">HOME</a></li>
+ 
+            <!-- <li><a data-toggle="modal" data-target="#myModal" href="#myModal"><i class="fa fa-envelope-o"></i></a></li> -->
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
 
-    <div id="map_canvas"></div>
-    <button onclick="createCir()">Create Circle</button>
-    <input type="text" id="address">
-    <button onclick="changeAddress()">Go</button>
+    <table>
+      <tbody>
+        <tr>
+          <td id="map_canvas"></td>
+          <td style="vertical-align: top;">
+            <div style="margin-top: 15px;">
+              <!--<button onclick="createCir()">Create Circle</button>-->
+              <table width="250" style="margin-top: -12px;">
+                <tbody>
+                  <tr>
+                    <td><input type="text" id="address" style="width: 250px; height: 47px; margin-top: 5px;" placeholder="Enter Your Current Location"></td>
+                    <td><button class="login-btn" onclick="search(new google.maps.LatLng(-33.890542, 151.274856))">Go</button><td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
