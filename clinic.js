@@ -12,6 +12,9 @@ angular.module('app')
 			$scope.clinicAddress = data.clinicAddress;
 			$scope.patientsInQueue = data.patientsInQueue;
 			$scope.patientsInQueue = [{patientName: "1vjhkrugh", reasonForVisit: "gjkehgje", timeEntered: "2014-09-20T23:10:29.380Z"},{patientName: "fehwgjerhg", reasonForVisit: "dsgbhjrgej", timeEntered: "2014-09-20T23:10:29.380Z"}]
+			
+
+
 			for(var i = 0; i < $scope.patientsInQueue.length; i++){
 				var date = new Date($scope.patientsInQueue[i].timeEntered);
 				var timenow = new Date();
@@ -20,6 +23,11 @@ angular.module('app')
 
 				$scope.patientsInQueue[i].seconds = Math.floor(Math.floor(milliseconds/1000)%60);
 				$scope.patientsInQueue[i].minutes = Math.floor(Math.floor(milliseconds/1000)/60);
+				$scope.patientsInQueue[i].hours = 0;
+				if($scope.patientsInQueue[i].minutes >= 60){
+					$scope.patientsInQueue[i].hours = Math.floor($scope.patientsInQueue[i].minutes/60);
+					$scope.patientsInQueue[i].minutes = Math.floor($scope.patientsInQueue[i].minutes%60);
+				}
 			}
 		});
 	}]);
