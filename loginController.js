@@ -16,9 +16,11 @@ app.controller('loginCtrl', ['$scope', '$http', '$window', '$cookieStore', '$loc
 
     $scope.signIn = function(){
         if($scope.isClinic == true){
+            console.log("signIn is Clinic");
             API.clinicLogin($scope.signInEmail, $scope.signInPassword).success(function(data, status, headers, config){
+                console.log("success");
                 $cookieStore.put('token', {access_token: data.token, patient: false});
-                location.path('/clinicLoggedIn');
+                $location.path('/clinicLoggedIn');
             }).error(function(){
                 alert("failed to log in");
             });
