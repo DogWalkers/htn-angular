@@ -94,59 +94,46 @@ angular
         }])
 
 .controller('patientCtrl', ['$scope', '$http', function($scope, $http){
-    console.log("In patient controller");
+    // scope variables and functions
+    $scope.distBwTwoPoints = function(lat1, lat2, lng1, lng2) { //lat1 and lng1 are source & the other 2 are destination
+        console.log("in distBwTwoPoints");
+        var map;
+        var geocoder;
+        var bounds = new google.maps.LatLngBounds();
+        //var markersArray = [];
+        var origin = new google.maps.LatLng(lat1, lng1);
+        var destination = new google.maps.LatLng(lat2, lng2);
 
-            $scope.distBwTwoPoints = function(lat1, lat2, lng1, lng2){ //lat1 and lng1 are source & the other 2 are destination
-                console.log("in distBwTwoPoints");
-                var map;
-                var geocoder;
-                var bounds = new google.maps.LatLngBounds();
-                //var markersArray = [];
-                var origin = new google.maps.LatLng(lat1, lng1);
-                var destination = new google.maps.LatLng(lat2, lng2);
+        
+        var service = new google.maps.DistanceMatrixService();
+        service.getDistanceMatrix({
+            origins: [origin],
+            destinations: [destination],
+            travelMode: google.maps.TravelMode.DRIVING,
+            unitSystem: google.maps.UnitSystem.METRIC,
+            avoidHighways: false,
+            avoidTolls: false
+        }, callback);
+        
+        function callback(response, status) {
+            if (status != google.maps.DistanceMatrixStatus.OK) {
+                alert('Error was: ' + status);
+            } else {
+                var origins = response.originAddresses;
+                var destinations = response.destinationAddresses;
 
-                
-                var service = new google.maps.DistanceMatrixService();
-                service.getDistanceMatrix(
-                {
-                  origins: [origin],
-                  destinations: [destination],
-                  travelMode: google.maps.TravelMode.DRIVING,
-                  unitSystem: google.maps.UnitSystem.METRIC,
-                  avoidHighways: false,
-                  avoidTolls: false
-              }, callback);
-                
+                for (var i = 0; i < origins.length; i++) {
+                    console.log(response.rows[0].elements[0].distance.value);
+                    var distanceInMeters = response.rows[0].elements[0].distance.value;
+                }
+            }
+            return distanceInMeters;
+        }
+    }
 
-                function callback(response, status) {
-                  if (status != google.maps.DistanceMatrixStatus.OK) {
-                    alert('Error was: ' + status);
-                } else {
-                    var origins = response.originAddresses;
-                    var destinations = response.destinationAddresses;
-
-                    for (var i = 0; i < origins.length; i++) {
-                      //var results = response.rows[i].elements;
-                      console.log(response.rows[0].elements[0].distance.value);
-                      var distanceInMeters = response.rows[0].elements[0].distance.value;
-                      //addMarker(origins[i], false);
-                      // for (var j = 0; j < results.length; j++) {
-                      //   //addMarker(destinations[j], true);
-                      //   outputDiv.innerHTML += origins[i] + ' to ' + destinations[j]
-                      //       + ': ' + results[j].distance.text + ' in '
-                      //       + results[j].duration.text + '<br>';
-                      // }
-                  }
-              }
-              return distanceInMeters;
-          }
-      }
-
-
-      $scope.getLatitudeLongitude = function(){
+    $scope.getLatitudeLongitude = function(){
         console.log($scope.patientAddress);
         var patientAddressCompressed = $scope.patientAddress.replace(" ","+");
-
 
         $http({
             method: 'POST',
@@ -166,7 +153,115 @@ angular
                 $scope.longitude = data.results[0].geometry.location.lng;
                 console.log($scope.latitude);
                 console.log($scope.longitude);
-            }   
+
+                $scope.search(new google.maps.LatLng($scope.latitude, $scope.longitude));
+            }
         });
+    }
+
+
+
+    // google map API services
+    var sendToken = $cookieStore.get('token').access_token;
+    $scope.clinics = null;
+
+    $http({
+        method: 'GET',
+        url: 'http://hackthenorth-myfirstnodeapp.rhcloud.com/api/clinic/all?token=' + sendToken,
+    }).success(function(data, status, headers, config){
+        $scope.clinics = data;
+    });
+
+    var map = null;
+    var markerArray = []; //create a global array to store markers
+    var locations;
+    for (var i = 0; i < $scope.clinics.length; i++) {
+        locations.push({$scope.clinics[i].clinicName, $scope.clinics[i].clinicLatitude, $scope.clinics[i].clinicLongitude, i + 1});
+    }
+    
+    /*var locations = [
+    ['Bondi Beach', -33.890542, 151.274856, 4],
+    ['Coogee Beach', -33.923036, 151.259052, 5],
+    ['Cronulla Beach', -34.028249, 151.157507, 3],
+    ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+    ['Maroubra Beach', -33.950198, 151.259302, 1]
+    ];*/
+
+    function initialize() {
+        var myOptions = {
+            zoom: 10,
+            center: new google.maps.LatLng(46.0730555556, -100.546666667),
+            mapTypeControl: false,
+            navigationControl: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+        var j = locations.length - 1;
+
+        function dropAndCreateMarker(j) {
+            if (j == -1) {
+                return;
+            } else {
+                setTimeout(function() {
+                    createMarker(new google.maps.LatLng(locations[j][1], locations[j][2]), locations[j][0], j);
+                    j--;
+                    dropAndCreateMarker(j);
+                }, 400);
+            }
+        }
+        dropAndCreateMarker(j);
+    }
+
+    function createMarker(latlng, myTitle, j, home) {
+        var tempFilePath = null;
+        if (!home) {
+            tempFilePath = '../assets/img/locationMarker.png';
+        } else {
+            tempFilePath = '../assets/img/homeMarker.png';
+        }
+        var marker = new google.maps.Marker({
+            animation: google.maps.Animation.DROP,
+            position: latlng,
+            map: map,
+            zIndex: Math.round(latlng.lat() * -100000) << 5,
+            icon: tempFilePath,
+            title: myTitle
+        });
+
+        if (!home) {
+            // create infowindow with a size and content, then add a listener to it and then open it
+            var infowindow = new google.maps.InfoWindow({
+                size: new google.maps.Size(150, 50),
+                content: myTitle
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map, marker);
+            });
+            setTimeout(function() { infowindow.open(map, marker); }, (j + 3) * 400);
+        }
+
+        markerArray.push(marker); //push local var marker into global array
+    }
+    
+    window.onload = initialize;
+
+    function search = function(searchCenter) {
+        var myCircle = new google.maps.Circle({
+            center: searchCenter,
+            map: map,
+            radius: 5000,
+            strokeOpacity: 0,
+            fillOpacity: 0
+        });
+        var myBounds = myCircle.getBounds();
+
+        //filters markers
+        for(var i=markerArray.length;i--;) {
+            if(!myBounds.contains(markerArray[i].getPosition()))
+                markerArray[i].setMap(null);
+        }
+        map.setCenter(searchCenter);
+        map.setZoom(map.getZoom()+1);
     }
 }]);
